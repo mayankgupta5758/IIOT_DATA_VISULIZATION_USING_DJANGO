@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #602c2c;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d12222;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th colspan="2">Data</th>
+        </tr>
+        <tr>
+            <td id="temperature">Loading...</td>
+            <td id="humidity">Loading...</td>
+        </tr>
+    </table>
+    
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        // Your JavaScript code here
+   
+        function populateTable() {
+            // Call the Django API endpoint to retrieve the data as JSON
+            fetch('/csedapp/get_data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').textContent = data[0];
+                    document.getElementById('humidity').textContent = data[1];
+                });
+        }
+    
+        // Call the function to populate the table on page load 
+        populateTable();
+    });
+    </script>
+    
+    
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="container-fluid my-4 px-0">
+    <div>
+        <h2 data-text="&nbsp;IOT DATA VISULIZATION USING DJANGO&nbsp;">&nbsp;IOT DATA VISULIZATION USING DJANGO&nbsp;</h2>
+    </div>
+    <link rel="stylesheet" href="/static/lol.css">
+
+
+    <div class="data-head">DHT Sensor Realtime By ESP8266</div>
+
+    <div class="data-container">
+        <div class="data-item">
+            <h2>Temperature</h2>
+            <p class="value" id="temperature">22 &#8451;</p>
+        </div>
+        <div class="data-item">
+            <h2>Humidity</h2>
+            <p class="value" id="humidity">10%</p>
+        </div>
+
+
+    </div>
+
+    <!-- the scripts for products you want to access must be added-->
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCmY2oZPKFgVDwz3BTmW6ea8vVqKpuZj9Y",
+                authDomain: "lan-lan-top.firebaseapp.com",
+                databaseURL: "https://lan-lan-top-default-rtdb.firebaseio.com",
+                projectId: "lan-lan-top",
+                storageBucket: "lan-lan-top.appspot.com",
+                messagingSenderId: "884656910850",
+                appId: "1:884656910850:web:cca395320da0eade52ed1b"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+
+        // getting reference to the database
+        var database = firebase.database();
+
+        //getting reference to the data we want
+        var dataRef2 = database.ref('DHT_11/Temperature');
+        var dataRef1 = database.ref('DHT_11/Humidity');
+
+        //fetch the data
+        dataRef1.on('value', function (getdata1) {
+            var humi = getdata1.val();
+            document.getElementById('humidity').innerHTML = humi + "%";
+        })
+
+        dataRef2.on('value', function (getdata2) {
+            var temp = getdata2.val();
+            document.getElementById('temperature').innerHTML = temp + "&#8451;";
+        })
+
+
+
+
+
+    </script>
+</div>
+{% endblock body %}
